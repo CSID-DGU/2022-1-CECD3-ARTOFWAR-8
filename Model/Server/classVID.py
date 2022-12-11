@@ -7,6 +7,14 @@ import boto3
 import os
 import json
 import datetime
+import time
+from dotenv import load_dotenv
+import os
+
+# load .env
+load_dotenv()
+bucketname = os.environ.get('BUCKET_NAME')
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 model = load_model('../image_classification/image_classification.h5') #유해성 판별 모델 경로
 
@@ -28,7 +36,7 @@ def predictVid(video_title,image_title):
                 address = os.path.splitext(video_title)[0]
 
                 s3 = boto3.client('s3')
-                s3.upload_file(suffix+'.png', 'aowbuket','image_'+address+'.jpeg',ExtraArgs={'ContentType': "image/jpeg"})                
+                s3.upload_file(suffix+'.png', bucketname,'image_'+address+'.jpeg',ExtraArgs={'ContentType': "image/jpeg"})                
                 os.remove(suffix+'.png')
 
             if(int(vidcap.get(1)) % 30 == 0): # 30프레임당 하나씩 이미지 추출
@@ -39,11 +47,10 @@ def predictVid(video_title,image_title):
         except:
             vidcap.release()
             break
-
-    status= 0 if count<3 else 1 # 0: 중립 동영상 1:유해 동영상
+    
     delete_video(save_file_path) #동영상 삭제
     
-    result={'status':status}
+    result={'ratio':(count/num)} #총 프레임 당 유해 이미지 비율
     return result #유해성 결과 반환
 
 #동영상의 이미지 유해성 판별 함수
@@ -61,8 +68,9 @@ def predictImg(img):
   
 # s3로부터 해당 동영상 파일 다운로드 함수
 def download_video(video_title):
+    time.sleep(15)
     s3=boto3.resource('s3')
-    bucket = s3.Bucket('aowbuket')
+    bucket = s3.Bucket(bucketname)
     
     obj_file = video_title
     save_file ='./'+video_title
