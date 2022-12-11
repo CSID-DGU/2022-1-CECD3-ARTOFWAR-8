@@ -22,5 +22,6 @@ urlpatterns = [
     path('uInquire/create/<storage_key>', views.createInquire.as_view(), name='createInquire'),
     path('uInquire/manage/<qid>', views.inquireUser.as_view(), name='inquireUser'),
     path('aInquire/manage/<qid>', views.inquireAdmin.as_view(), name='inquireAdmin'),
-    path('uInquire/delete/<qid>', views.deleteInquire.as_view(), name='deleteInquire'),
+   path('uInquire/delete/<qid>', views.deleteInquire.as_view(), name='deleteInquire'),
+   path('resend/<storage_key>', views.resendClassify.as_view(), name='resendClassify'),
 ]

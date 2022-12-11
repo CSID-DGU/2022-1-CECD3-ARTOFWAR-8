@@ -444,3 +444,19 @@ class deleteInquire(PublicApiMixin,APIView):
             return JsonResponse({'message' : 'SUCCESS'}, status=200)
         except KeyError:
             return JsonResponse({'message' : 'KEY_ERROR'}, status=400)
+
+#판별 요청 재전송
+@method_decorator(ensure_csrf_cookie, name="dispatch")
+class resendClassify(PublicApiMixin,APIView):
+     @swagger_auto_schema(tags=["판별 요청 재전송"],
+                         responses={
+                             200: '성공',
+                             403: 'Key Error',
+                             500: '서버에러'
+                         })
+     def get(self, request,storage_key):
+        image=getImage(storage_key)
+        # 유해 동영상 필터링 진행 및 추가 정보 업로드 - 비동기 처리
+        #classify_video.delay(storage_key,image)   # 유해 동영상 필터링 - 이미지 진행
+        #analysis_video.delay(storage_key)   # 유해 동영상 필터링 - 음성 진행 + 주요 단어 키워드와 소개문 작성
+        return JsonResponse({'message' : 'SUCCESS'}, status=200)

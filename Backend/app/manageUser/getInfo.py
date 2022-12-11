@@ -6,7 +6,8 @@ from rest_framework.response import Response
 
 #   전달받은 데이터로 회원가입
 def userSignUp(data):
-    if Userinfo.objects.filter(ID= data['ID']).exists(): # ID 중복 확인
+    ID= data['ID']
+    if Userinfo.objects.filter(ID= ID).exists(): # ID 중복 확인
         return JsonResponse({'message' : 'ALREADY_EXISTS'}, status=400) # 중복일 경우, 오류 반환
     pwd = data['pwd']
     name = data['name']
@@ -17,7 +18,7 @@ def userSignUp(data):
     pwd = data['pwd'].encode('utf-8')   
     pwd_crypt = bcrypt.hashpw(pwd, bcrypt.gensalt()).decode('utf-8') # 비밀번호 암호화
             
-    Userinfo.objects.create(ID=ID, name=name, password=pwd_crypt) # DB에 유저 정보 추가 - 회원 가입
+    Userinfo.objects.create(ID= ID, name=name, password=pwd_crypt) # DB에 유저 정보 추가 - 회원 가입
     return JsonResponse({'message' : 'SUCCESS'}, status=200)
 
 #   ID 중복 체크
