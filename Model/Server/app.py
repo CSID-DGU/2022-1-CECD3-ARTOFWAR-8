@@ -9,13 +9,19 @@ api = Api(app)  # Flask 객체에 Api 객체 등록
 @app.route('/classify',methods=['POST'])
 def classify():
     video_title=request.form.get('title') #동영상 제목 추출
-    image=request.form.get('image') #동영상 이미지 여부
+    image=request.form.get('image')
 
     result = predictVid(video_title,image) #해당 동영상 유해성 판별
-    return str(result) #유해성 결과 반환
+    return result #유해성 결과 반환
+
+@app.route('/',methods=['POST'])
+def classify2():
+    video_title=request.form['title'] #동영상 제목 추출
+    return str(video_title) #유해성 결과 반환
+
 
 if __name__=='__main__':
- try:
-    app.run(host='0.0.0.0', port=5000, debug=True)
- except:
-    print('connect error')
+    try:
+        app.run(host='0.0.0.0', port=5000, debug=True)
+    except:
+        print('error')
