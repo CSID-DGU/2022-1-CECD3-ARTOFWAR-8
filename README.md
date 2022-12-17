@@ -49,12 +49,13 @@
 ### 주요 단어 추출 및 유해 단어 필터링   
 #### AWS Transcribe API를 이용
 - AWS Transcribe 시 config 설정 값
-region_name = 'us-east-1',
-signature_version = 'v4',
-retries={
-  	'max_attempts':5,
-    'mode':'standard'
-}
+
+region_name = 'us-east-1',  
+signature_version = 'v4',  
+retries={  
+  	'max_attempts':5,  
+    'mode':'standard'  
+}  
 
 ##### 성능 확인
 ![image](https://user-images.githubusercontent.com/80958412/208253378-a9b1d2be-4132-4994-8569-50f85e7457fd.png)
