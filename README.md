@@ -65,6 +65,9 @@ retries={
 ![image](https://user-images.githubusercontent.com/80958412/208253444-cbe02109-d139-4ac1-9055-d5368007a356.png)
 다음의 통계에 따라 100MB 이하의 동영상 파일만으로 제한한다.
 
+#### 결과 텍스트 데이터 사용  
+- 추출된 주요 단어로 소개문 작성
+![image](https://user-images.githubusercontent.com/80958412/208253548-934d81f6-f3bb-44b0-b900-bda607996dea.png)
 
 ## 문의
 고가현 gahyun0527@dgu.ac.kr \
