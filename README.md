@@ -46,8 +46,24 @@
 - reddis: 동영상 요청이 들어왔을 경우 작업을 스케줄링
 - celery: 비동기적으로 동영상을 이용한 서버 통신
 
-### 주요 단어 추출 및 유해 단어 필터링
-AWS Transcribe API를 이용
+### 주요 단어 추출 및 유해 단어 필터링   
+#### AWS Transcribe API를 이용
+- AWS Transcribe 시 config 설정 값
+region_name = 'us-east-1',
+signature_version = 'v4',
+retries={
+  	'max_attempts':5,
+    'mode':'standard'
+}
+
+##### 성능 확인
+![image](https://user-images.githubusercontent.com/80958412/208253378-a9b1d2be-4132-4994-8569-50f85e7457fd.png)
+![image](https://user-images.githubusercontent.com/80958412/208253397-1d4481dc-2f7f-4c57-b916-389405124bc7.png)
+
+#### 동영상 길이 및 크기별 비교
+![image](https://user-images.githubusercontent.com/80958412/208253444-cbe02109-d139-4ac1-9055-d5368007a356.png)
+다음의 통계에 따라 100MB 이하의 동영상 파일만으로 제한한다.
+
 
 ## 문의
 고가현 gahyun0527@dgu.ac.kr \
