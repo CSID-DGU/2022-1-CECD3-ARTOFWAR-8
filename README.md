@@ -67,7 +67,7 @@ retries={
 
 #### 결과 텍스트 데이터 사용  
 - 추출된 주요 단어로 소개문 작성  
-![image](https://user-images.githubusercontent.com/80958412/208253548-934d81f6-f3bb-44b0-b900-bda607996dea.png)
+![image](https://user-images.githubusercontent.com/80958412/208253548-934d81f6-f3bb-44b0-b900-bda607996dea.png)  
 사진은 양치 교육에 대한 동영상의 텍스트 변환 결과와 주요 단어 추출 결과이다.  
 주요 단어는 '칫솔', '치아', '방법' 등으로 추출되며 이는 [동영상 소개문] 란에 소개문과 함께 해시태그(#)의 형태로 출력된다.  
 ## 문의
