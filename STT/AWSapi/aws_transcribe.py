@@ -14,8 +14,8 @@ bucket = os.environ.get('BUCKET_NAME')
 def transcribe(vid_title):
     file_nm = vid_title
 
-    # Transcribe를 위한 Config 설정
-    my_config = Config(
+    # Config 설정
+    vid_config = Config(
     	region_name = 'us-west-1',
         signature_version = 'v4',
         retries={
@@ -25,9 +25,9 @@ def transcribe(vid_title):
         )
 
     # Transcribe 실행
-    transcribe =boto3.client('transcribe', config=my_config)
-    # s3에 업로드한 파일 URL
-    job_uri = 'http://{}.s3-website-us-west-1.amazonaws.com/{}'.format(bucket,file_nm)
+    transcribe =boto3.client('transcribe', config=vid_config)
+    # s3에 업로드한 파일
+    job_uri = 'http://{}.s3-website-us-west-1.amazonaws.com/{}'.format(bucket,file_nm)  # job의 파일 위치 링크 형식에 맞춤
     transcribe.start_transcription_job(
         TranscriptionJobName=file_nm,
         Media={'MediaFileUri': job_uri},
@@ -46,22 +46,21 @@ def transcribe(vid_title):
             save_json_uri = status['TranscriptionJob']['Transcript']['TranscriptFileUri']
             break
 
-    # Transcribe 결과가 저장된 웹주소
     save_json_uri = status['TranscriptionJob']['Transcript']['TranscriptFileUri']
 
-     # 웹서버 결과 파이썬으로 불러오기
+     # 웹서버 결과
     load = request.urlopen(save_json_uri)
     confirm = load.status
     rst = load.read().decode('utf-8')
 
-    # 문자열을 딕셔너리로 변환 후 결과 가져오기
+    # 문자열을 딕셔너리로 변환
     transcribe_text = literal_eval(rst)['results']['transcripts'][0]['transcript']
 
     # 확인
     print(transcribe_text)
 
     # Job 삭제하기
-    del_transcribe =boto3.client('transcribe', config=my_config)
+    del_transcribe =boto3.client('transcribe', config=vid_config)
     res = del_transcribe.delete_transcription_job(
     TranscriptionJobName = file_nm
     )
